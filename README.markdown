@@ -1,6 +1,6 @@
 # ACBTool
 
-libraries for working with Adobe's Colorbook file format (.acb)
+libraries for working with Adobe's Colorbook file format (.acb). Written by Spike Grobstein (spikegrobstein@mac.com)
 
 This is very much a work in progress. I cranked this code out over a weekend back in like 2007 and never finished it. My goal was to create a full library for working with acb files based on the file format described by Ates Goral (http://magnetiq.com/docs/PhotoshopColorBook.txt).
 
