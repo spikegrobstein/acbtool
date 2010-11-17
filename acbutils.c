@@ -28,7 +28,7 @@ u16 acb_read_word(FILE *ifile) {
 	
 	u16 val = *s;
 	free(s);
-	return val;
+	return ntohs(val);
 }
 
 u32 acb_read_long(FILE *ifile) {
@@ -44,7 +44,7 @@ u32 acb_read_long(FILE *ifile) {
 	u32 val = *l;
 	free(l);
 	
-	return val;
+	return ntohl(val);
 }
 
 //headerstuff
