@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "acbcolorrecord.h"
 #include "acbstring.h"
 #include "types.h"
 
@@ -78,7 +79,6 @@ void acb_seek_to_color_space(FILE *ifile);
 void acb_seek_to_first_color_record(FILE *ifile);
 
 //color records...
-void acb_read_next_color_record(FILE *ifile, ACB_Color_Record *record);
-
+void acb_read_next_color_record(FILE *ifile, ACB_Color_Record *record, int mode);
 
 #endif
