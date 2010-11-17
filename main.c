@@ -21,6 +21,9 @@ int main(int argc, char **argv) {
 	
 	acb_read_header(ifile, header);
 	
+	char *title = (char*)malloc(header->title->length + 1);
+	acb_string_to_utf8(header->title, (UTF8*)title);
+	
 	char *prefix = (char*)malloc(header->prefix->length + 1);
 	acb_string_to_utf8(header->prefix, (UTF8*)prefix);
 	
