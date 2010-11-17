@@ -181,7 +181,7 @@ void acb_read_next_color_record(FILE *ifile, ACB_Color_Record *record, int mode)
 		exit(1);
 	}
 	
-	switch (mode) {
-		case ACB_C
-	}
+//	switch (mode) {
+//		case ACB_C
+//	}
 }
