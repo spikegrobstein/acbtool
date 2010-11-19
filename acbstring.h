@@ -2,7 +2,6 @@
 #define __ACBSTRING_H__
 
 #include <string.h>
-#include "ConvertUTF.h"
 #include "types.h"
 
 typedef struct acb_string {

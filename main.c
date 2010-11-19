@@ -24,13 +24,13 @@ int main(int argc, char **argv) {
 	char *title = (char*)malloc(header->title->length * sizeof(char) + 1);
 	acb_string_to_utf8(header->title, title);
 		
-	UTF8 *prefix = (UTF8*)malloc(header->prefix->length * sizeof(UTF8) + 1);
+	char *prefix = (char*)malloc(header->prefix->length * sizeof(char) + 1);
 	acb_string_to_utf8(header->prefix, prefix);
 	
-	UTF8 *postfix = (UTF8*)malloc(header->postfix->length * sizeof(UTF8) + 1);
+	char *postfix = (char*)malloc(header->postfix->length * sizeof(char) + 1);
 	acb_string_to_utf8(header->postfix, postfix);
 
-	UTF8 *description = (UTF8*)malloc(header->description->length * sizeof(UTF8) + 1);
+	char *description = (char*)malloc(header->description->length * sizeof(char) + 1);
 	acb_string_to_utf8(header->description, description);
 	
 	printf("signature:            %s\n", header->signature);

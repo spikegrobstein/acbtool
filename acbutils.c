@@ -1,5 +1,4 @@
 #include "acbutils.h"
-#include "ConvertUTF.h"
 
 void acb_read_string(FILE *ifile, ACB_String *string) {
 	//first, let's get the length...
@@ -8,9 +7,9 @@ void acb_read_string(FILE *ifile, ACB_String *string) {
 	if (string->length == 0) return; //error
 
 	// allocate size of string + 1 * sizeof(UTF16)
-	string->string = (char*)malloc(string->length * sizeof(UTF16) + 1);
+	string->string = (char*)malloc(string->length * sizeof(u16) + 1);
 		
-	if (fread(string->string, sizeof(UTF16), string->length, ifile) != string->length) {
+	if (fread(string->string, sizeof(u16), string->length, ifile) != string->length) {
 		printf("error: acb_read_string- reading string\n");
 		return;
 	}
