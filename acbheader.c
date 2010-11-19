@@ -6,17 +6,15 @@ void acb_read_header(FILE *ifile, ACB_Header *header) {
 	acb_read_signature(ifile, header->signature);
 	
 	//read the version
-	header->version = acb_read_word(ifile);
+	header->version = acb_read_long(ifile);
 	
 	//read identifier
-	header->identifier = acb_read_word(ifile);
-	
+	header->identifier = acb_read_long(ifile);
+		
 	//read title...
 	header->title = (ACB_String*)malloc(sizeof(ACB_String*));
 	acb_read_title(ifile, header->title);
-	char *title = (char*)malloc(header->title->length + 1);
-	acb_string_to_utf8(header->title, (UTF8*)title);
-	
+		
 	//read prefix...
 	header->prefix = (ACB_String*)malloc(sizeof(ACB_String*));
 	acb_read_prefix(ifile, header->prefix);
