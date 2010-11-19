@@ -16,22 +16,22 @@ int main(int argc, char **argv) {
 		perror(filename);
 		exit(1);
 	}
-	
+		
 	ACB_Header *header = (ACB_Header*)malloc(sizeof(ACB_Header));
 	
 	acb_read_header(ifile, header);
 	
-	char *title = (char*)malloc(header->title->length + 1);
-	acb_string_to_utf8(header->title, (UTF8*)title);
+	char *title = (char*)malloc(header->title->length * sizeof(char) + 1);
+	acb_string_to_utf8(header->title, title);
+		
+	UTF8 *prefix = (UTF8*)malloc(header->prefix->length * sizeof(UTF8) + 1);
+	acb_string_to_utf8(header->prefix, prefix);
 	
-	char *prefix = (char*)malloc(header->prefix->length + 1);
-	acb_string_to_utf8(header->prefix, (UTF8*)prefix);
-	
-	char *postfix = (char*)malloc(header->postfix->length + 1);
-	acb_string_to_utf8(header->postfix, (UTF8*)postfix);
+	UTF8 *postfix = (UTF8*)malloc(header->postfix->length * sizeof(UTF8) + 1);
+	acb_string_to_utf8(header->postfix, postfix);
 
-	char *description = (char*)malloc(header->description->length + 1);
-	acb_string_to_utf8(header->description, (UTF8*)description);
+	UTF8 *description = (UTF8*)malloc(header->description->length * sizeof(UTF8) + 1);
+	acb_string_to_utf8(header->description, description);
 	
 	printf("signature:            %s\n", header->signature);
 	printf("version:              0x%04X\n", header->version);

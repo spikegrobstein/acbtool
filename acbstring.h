@@ -7,9 +7,9 @@
 
 typedef struct acb_string {
 	u32 length;
-	u16 *string; /* utf16 string */
+	char *string; /* utf16 string */
 } ACB_String;
 
-void acb_string_to_utf8(ACB_String *string, UTF8 *utf8_buf);
+void acb_string_to_utf8(ACB_String *string, char *buf);
 
 #endif

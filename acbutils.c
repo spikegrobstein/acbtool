@@ -4,11 +4,12 @@
 void acb_read_string(FILE *ifile, ACB_String *string) {
 	//first, let's get the length...
 	string->length = acb_read_long(ifile);
-	
+		
 	if (string->length == 0) return; //error
 
-	string->string = (UTF16*)malloc(string->length * sizeof(UTF16));
-	
+	// allocate size of string + 1 * sizeof(UTF16)
+	string->string = (char*)malloc(string->length * sizeof(UTF16) + 1);
+		
 	if (fread(string->string, sizeof(UTF16), string->length, ifile) != string->length) {
 		printf("error: acb_read_string- reading string\n");
 		return;
@@ -43,7 +44,7 @@ u32 acb_read_long(FILE *ifile) {
 	
 	u32 val = *l;
 	free(l);
-	
+		
 	return ntohl(val);
 }
 
