@@ -13,8 +13,6 @@ To build the software, run the make.sh command (included in this archive). it wi
 
 This should build on any POSIX operating system (OSX, Linux, BSD, maybe cygwin?, etc) without modification.
 
-As of this writing, the `acbtool` does not appear to build.
-
 ## Acknowledgements
 
-This software is based on documentation by Ates Goral (http://magnetiq.com) and contains UTF code from Unicode.
+This software is based on documentation by Ates Goral (http://magnetiq.com)
