@@ -31,4 +31,6 @@ typedef struct acb_color_record {
 	char 				color_components[4];
 }ACB_Color_Record;
 
+void acb_free_color_record(ACB_Color_Record *r);
+
 #endif

@@ -176,7 +176,7 @@ void dump_action(int argc, char **argv) {
 
 			printf(color_format_line, color_name, r->color_code, "", "");
 
-			free(r);
+			acb_free_color_record(r);
 		}
 	}
 	
