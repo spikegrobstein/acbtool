@@ -9,11 +9,11 @@ up the code for public consumption.
 
 ## Building
 
-`acbtool` depends on libiconv. This library is used for converting from UTF16 to UTF8 and can be downloaded from http://www.gnu.org/software/libiconv/
+`acbtool` depends on libiconv. OSX seems to ship with libiconv installed, but Ubuntu Linux does not. This library is used for converting from UTF16 to UTF8 and may be installed using your distribution's package manager or downloaded from http://www.gnu.org/software/libiconv/ 
 
 To build the software, run the make.sh command (included in this archive). it will output a commandline program called `acbtool`
 
-This should build on any POSIX operating system (OSX, Linux, BSD, maybe cygwin?, etc) without modification.
+This should build on any POSIX operating system (OSX, Linux, BSD, maybe cygwin?, etc) without modification. It has only been tested on 64-bit Intel OSX machines as of this writing. I believe that it won't function properly on 32-bit PPC OSX at this time.
 
 ## Acknowledgements
 
