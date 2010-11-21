@@ -49,11 +49,22 @@ int main(int argc, char **argv) {
 	int i = 0;
 	ACB_Color_Record *r = NULL;
 	
+	acb_seek_to_first_color_record(ifile);
+	
+	char *color_format_line = "%-40s %-14s %-7s %-5s\n";
+	
+	printf(color_format_line, "Name", "Code", "Mode", "Components");
+	
 	for (i = 0; i < header->color_count; i++) {
 		r = (ACB_Color_Record*)malloc(sizeof(ACB_Color_Record));
 		
-		r->name = (ACB_String*)malloc(sizeof(ACB_String));
+		acb_read_next_color_record(ifile, r, 0);
 		
+		char *color_name = (char*)malloc(r->name->length * sizeof(char) + 1);
+		acb_string_to_utf8(r->name, color_name);
+		
+		printf(color_format_line, color_name, r->color_code, "", "");
+			
 		free(r);
 	}
 	
