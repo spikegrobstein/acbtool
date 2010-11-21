@@ -6,9 +6,22 @@
 #include "acbheader.h"
 #include "acbcolorrecord.h"
 
-void print_usage();
+// options that are common between all actions
+#define COMMON_OPTIONS		{ "verbose", no_argument, NULL, 'v' }, \
+													{ "hex", no_argument, NULL, 'x' }, \
+													{ "suppress-headers", no_argument, NULL, 'S' }, \
+													{ "quiet", no_argument, NULL, 'q' }
 
-char *executable_name = NULL;
+void print_usage();
+void dump_action(int argc, char **argv);
+
+char *executable_name = NULL; // the name of the executable
+
+// global commandline flags
+int verbosity = 0; // verbosity level
+int quiet = 0;
+int suppress_headers = 0;
+int hex_output = 0;
 
 int main(int argc, char **argv) {
 	char *action = NULL;
@@ -22,22 +35,82 @@ int main(int argc, char **argv) {
 		print_usage();
 	}
 	
-	action = *argv++;
-	argc--;
+	action = *argv;
+	
+	// we don't shift argc or argv when reading the action because getopt
+	// expects argv[0] to be the executable name. right now, it's the action.
+
+	printf("Action: %s\n", action);
 
 	if (strcmp(action, "help") == 0) {
 		printf("helping you...\n");
 		exit(EXIT_SUCCESS);
 	} else if (strcmp(action, "dump") == 0) {
-		printf("going to dump!\n");
-		exit(EXIT_SUCCESS);
+		dump_action(argc, argv);
 	} else {
 		printf("unknown action: %s\n", action);
 		print_usage();
 		exit(EXIT_SUCCESS);
 	}
+	
+	exit(EXIT_SUCCESS);
+}
 
-	char *filename = argv[1];
+void print_usage() {
+	printf("USAGE!\n");
+	printf("%s <action> [options] <filename>\n", executable_name);
+	
+	exit(EXIT_SUCCESS);
+}
+
+void dump_action(int argc, char **argv) {
+	// flags:
+	int header_only = 0;
+	
+	// getopt stuff:
+	static struct option longopts[] = {
+		COMMON_OPTIONS,
+		{ "header-only", no_argument, NULL, 'h' },
+		{ NULL, 0, NULL, 0 }
+	};
+	
+	int ch; // getopt handle
+	int ind; // getopt index
+	
+	while ((ch = getopt_long(argc, argv, "vxSqh", longopts, &ind)) != -1) {
+		switch (ch) {
+			case 'v':
+				verbosity++;
+				break;
+				
+			case 'x':
+				hex_output++;
+				break;
+				
+			case 'S':
+				suppress_headers++;
+				break;
+				
+			case 'q':
+				quiet++;
+				break;
+				
+			case 'h':
+				header_only++;
+				break;
+				
+			default:
+				printf("Unknown option!\n");
+				exit(EXIT_FAILURE);
+		}
+	}
+	
+	argc -= optind;
+	argv += optind;
+	
+	// now, process the files!
+	
+	char *filename = argv[0];
 
 	printf("Opening %s\n", filename);
 
@@ -100,11 +173,4 @@ int main(int argc, char **argv) {
 	}
 	
 	fclose(ifile);
-}
-
-void print_usage() {
-	printf("USAGE!\n");
-	printf("%s <action> [options] <filename>\n", executable_name);
-	
-	exit(EXIT_SUCCESS);
 }
