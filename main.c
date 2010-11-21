@@ -24,11 +24,19 @@ int main(int argc, char **argv) {
 	
 	action = *argv++;
 	argc--;
-	
-	printf("action: %s\n", action);
-	
-	exit(1);
-	
+
+	if (strcmp(action, "help") == 0) {
+		printf("helping you...\n");
+		exit(EXIT_SUCCESS);
+	} else if (strcmp(action, "dump") == 0) {
+		printf("going to dump!\n");
+		exit(EXIT_SUCCESS);
+	} else {
+		printf("unknown action: %s\n", action);
+		print_usage();
+		exit(EXIT_SUCCESS);
+	}
+
 	char *filename = argv[1];
 
 	printf("Opening %s\n", filename);
