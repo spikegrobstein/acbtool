@@ -111,6 +111,12 @@ void dump_action(int argc, char **argv) {
 	// now, process the files!
 	
 	char *filename = argv[0];
+	
+	if (!filename) {
+		// the filename was blank
+		printf("No filename provided!\n");
+		exit(EXIT_FAILURE);
+	}
 
 	printf("Opening %s\n", filename);
 
