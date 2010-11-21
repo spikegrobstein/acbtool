@@ -29,6 +29,9 @@
 #define ACB_SIGNATURE 			"8BCB"
 #define ACB_VERSION					0x0001
 
+// color record stuff
+#define ACB_COLOR_RECORD_CODE_SIZE	6 /* number of bytes in the color_code field */
+
 //colorspace constants:
 #define ACB_CS_RGB				0
 #define	ACB_CS_CMYK				2

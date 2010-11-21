@@ -5,7 +5,7 @@
 
 typedef struct acb_color_record {
 	ACB_String 	*name;
-	char 				color_code[6];
+	char 				color_code[ACB_COLOR_RECORD_CODE_SIZE];
 	char 				color_components[4];
 }ACB_Color_Record;
 
