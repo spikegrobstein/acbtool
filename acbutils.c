@@ -170,18 +170,45 @@ void acb_seek_to_first_color_record(FILE *ifile) {
 
 void acb_read_next_color_record(FILE *ifile, ACB_Color_Record *record, int mode) {
 	/*
-	**	assumes that record has been allocated and configured... (name is configured, too)
+	**	assumes that record has been allocated and configured...
 	**	also assumes that ifile's current position is aligned to a record
 	*/
 	
+	record->name = (ACB_String*)malloc(sizeof(ACB_String));
 	acb_read_string(ifile, record->name);
 	
 	if (fread(record->color_code, 1, 6, ifile) != 6) {
-		printf("error next_color_record\n");
+		printf("error next_color_record (color_code)\n");
 		exit(1);
 	}
+		
+	acb_read_color_data(ifile, record->color_components, mode);
+}
+
+int acb_read_color_data(FILE *ifile, char *buf, int mode) {
 	
-//	switch (mode) {
-//		case ACB_C
-//	}
+	int data_size = 0;
+	
+	switch (mode) {
+		case ACB_CS_RGB:
+			data_size = ACB_CS_RGB_SIZE;
+			break;
+		case ACB_CS_CMYK:
+			data_size = ACB_CS_CMYK_SIZE;
+			break;
+		case ACB_CS_LAB:
+			data_size = ACB_CS_LAB_SIZE;
+			break;
+		default:
+			printf("Uknown mode while reading (%d)\n", mode);
+			exit(1);
+	}
+	
+	if (fread(buf, 1, data_size, ifile) != data_size) {
+		printf("Error whilst reading color data!\n");
+		exit(1);
+		return 0;
+	}
+	
+	return data_size;
 }

@@ -43,6 +43,13 @@
 #define ACB_CS_GRAYSCALE	8
 #define ACB_CS_HKS				10
 
+// colorspace datasize in bytes
+#define ACB_CS_RGB_SIZE		3
+#define ACB_CS_CMYK_SIZE	4
+#define ACB_CS_LAB_SIZE		3
+
+// other color spaces are not defined? who knows what size they should be.
+
 typedef struct acb_record {
 	char *nothing;
 } ACB_Record;
@@ -80,5 +87,7 @@ void acb_seek_to_first_color_record(FILE *ifile);
 
 //color records...
 void acb_read_next_color_record(FILE *ifile, ACB_Color_Record *record, int mode);
+
+int acb_read_color_data(FILE *ifile, char *buf, int mode);
 
 #endif
