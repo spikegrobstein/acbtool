@@ -8,13 +8,26 @@
 
 void print_usage();
 
+char *executable_name = NULL;
+
 int main(int argc, char **argv) {
 	char *action = NULL;
 	
+	// fetch the executable name (global var)
+	executable_name = *argv++;
+	argc--;
+	
 	// check minimum arguments
-	if (argc < 2) {
+	if (argc < 1) {
 		print_usage();
 	}
+	
+	action = *argv++;
+	argc--;
+	
+	printf("action: %s\n", action);
+	
+	exit(1);
 	
 	char *filename = argv[1];
 
@@ -83,5 +96,7 @@ int main(int argc, char **argv) {
 
 void print_usage() {
 	printf("USAGE!\n");
+	printf("%s <action> [options] <filename>\n", executable_name);
+	
 	exit(EXIT_SUCCESS);
 }
