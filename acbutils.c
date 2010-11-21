@@ -177,7 +177,9 @@ void acb_read_next_color_record(FILE *ifile, ACB_Color_Record *record, int mode)
 	record->name = (ACB_String*)malloc(sizeof(ACB_String));
 	acb_read_string(ifile, record->name);
 	
-	if (fread(record->color_code, 1, 6, ifile) != 6) {
+	bzero(record->color_code, ACB_COLOR_RECORD_CODE_SIZE + 1);
+	
+	if (fread(record->color_code, 1, ACB_COLOR_RECORD_CODE_SIZE, ifile) != ACB_COLOR_RECORD_CODE_SIZE) {
 		printf("error next_color_record (color_code)\n");
 		exit(1);
 	}
