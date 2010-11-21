@@ -1,11 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <getopt.h>
 
 #include "acbutils.h"
 #include "acbheader.h"
 #include "acbcolorrecord.h"
 
+void print_usage();
+
 int main(int argc, char **argv) {
+	char *action = NULL;
+	
+	// check minimum arguments
+	if (argc < 2) {
+		print_usage();
+	}
+	
 	char *filename = argv[1];
 
 	printf("Opening %s\n", filename);
@@ -69,4 +79,9 @@ int main(int argc, char **argv) {
 	}
 	
 	fclose(ifile);
+}
+
+void print_usage() {
+	printf("USAGE!\n");
+	exit(EXIT_SUCCESS);
 }
