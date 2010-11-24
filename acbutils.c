@@ -8,6 +8,7 @@ void acb_read_string(FILE *ifile, ACB_String *string) {
 
 	// allocate size of string + 1 * sizeof(UTF16)
 	string->string = (char*)malloc(string->length * sizeof(u16) + 1);
+	
 		
 	if (fread(string->string, sizeof(u16), string->length, ifile) != string->length) {
 		printf("error: acb_read_string- reading string\n");

@@ -1,5 +1,6 @@
 #include "acbstring.h"
 #include <iconv.h>
+#include <stdio.h>
 
 void acb_string_to_utf8(ACB_String *string, char *buf) {
 	/*
@@ -14,4 +15,12 @@ void acb_string_to_utf8(ACB_String *string, char *buf) {
 	size_t icv = iconv(cd, &string->string, &inbytes, &buf, &outbytes);
 	
 	iconv_close(cd);
+}
+
+void acb_free_string(ACB_String *s) {
+	printf("about to free s->string\n");
+	if (s->string) { free(s->string); }
+	printf("freed s->string\n");
+	free(s);
+	printf("freed s\n");
 }

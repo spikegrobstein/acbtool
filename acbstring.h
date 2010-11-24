@@ -10,5 +10,6 @@ typedef struct acb_string {
 } ACB_String;
 
 void acb_string_to_utf8(ACB_String *string, char *buf);
+void acb_free_string(ACB_String *s);
 
 #endif
