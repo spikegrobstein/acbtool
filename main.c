@@ -63,6 +63,9 @@ void print_usage() {
 	exit(EXIT_SUCCESS);
 }
 
+#pragma mark -
+#pragma mark ****ACTIONS****
+
 void dump_action(int argc, char **argv) {
 	// flags:
 	int header_only = 0;
@@ -176,7 +179,10 @@ void dump_action(int argc, char **argv) {
 
 			printf(color_format_line, color_name, r->color_code, "", "");
 
-			acb_free_color_record(r);
+			free(color_name);
+			//free(r->name->string); // FIXME: memory leak. no idea why, but this should work, but it complains about not being malloc()'d
+			free(r->name);
+			free(r);
 		}
 	}
 	
