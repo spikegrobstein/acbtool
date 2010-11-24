@@ -5,6 +5,7 @@
 #include "acbutils.h"
 #include "acbheader.h"
 #include "acbcolorrecord.h"
+#include "errors.h"
 
 // options that are common between all actions
 #define COMMON_OPTIONS		{ "verbose", no_argument, NULL, 'v' }, \
@@ -107,7 +108,7 @@ void dump_action(int argc, char **argv) {
 				
 			default:
 				printf("Unknown option!\n");
-				exit(EXIT_FAILURE);
+				exit(EXIT_ERROR_CLI);
 		}
 	}
 	
@@ -121,7 +122,7 @@ void dump_action(int argc, char **argv) {
 	if (!filename) {
 		// the filename was blank
 		printf("No filename provided!\n");
-		exit(EXIT_FAILURE);
+		exit(EXIT_ERROR_NO_IFILE);
 	}
 
 	printf("Opening %s\n", filename);
@@ -130,7 +131,7 @@ void dump_action(int argc, char **argv) {
 	
 	if (!(ifile = fopen(filename, "r"))) {
 		perror(filename);
-		exit(1);
+		exit(EXIT_ERROR_IFILE);
 	}
 		
 	ACB_Header *header = (ACB_Header*)malloc(sizeof(ACB_Header));
@@ -285,7 +286,7 @@ void get_action(int argc, char **argv) {
 			
 			default:
 				printf("Unknown option!\n");
-				exit(EXIT_FAILURE);
+				exit(EXIT_ERROR_CLI);
 		}
 	}
 	
@@ -299,7 +300,7 @@ void get_action(int argc, char **argv) {
 	if (!filename) {
 		// the filename was blank
 		printf("No filename provided!\n");
-		exit(EXIT_FAILURE);
+		exit(EXIT_ERROR_NO_IFILE);
 	}
 
 	printf("Opening %s\n", filename);
@@ -308,7 +309,7 @@ void get_action(int argc, char **argv) {
 	
 	if (!(ifile = fopen(filename, "r"))) {
 		perror(filename);
-		exit(1);
+		exit(EXIT_ERROR_IFILE);
 	}
 	
 	// read the header
