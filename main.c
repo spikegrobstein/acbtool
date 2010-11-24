@@ -14,6 +14,7 @@
 
 void print_usage();
 void dump_action(int argc, char **argv);
+void get_action(int argc, char **argv);
 
 char *executable_name = NULL; // the name of the executable
 
@@ -47,6 +48,8 @@ int main(int argc, char **argv) {
 		exit(EXIT_SUCCESS);
 	} else if (strcmp(action, "dump") == 0) {
 		dump_action(argc, argv);
+	} else if (strcmp(action, "get") == 0) {
+		get_action(argc, argv); 
 	} else {
 		printf("unknown action: %s\n", action);
 		print_usage();
@@ -187,4 +190,175 @@ void dump_action(int argc, char **argv) {
 	}
 	
 	fclose(ifile);
+}
+
+// handler for "get" action
+void get_action(int argc, char **argv) {
+	// flags:
+	int get_title = 0;
+	int get_prefix = 0;
+	int get_postfix = 0;
+	int get_description = 0;
+	int get_version = 0;
+	int get_identifier = 0;
+	int get_colors_per_page = 0;
+	int get_page_selector_offset = 0;
+	int get_color_space = 0;
+	int get_color_count = 0;
+	
+	// getopt stuff:
+	static struct option longopts[] = {
+		COMMON_OPTIONS,
+		{ "title", no_argument, NULL, 't' },
+		{ "prefix", no_argument, NULL, 'e' },
+		{ "postfix", no_argument, NULL, 'X' },
+		{ "description", no_argument, NULL, 'd' },
+		{ "version", no_argument, NULL, 'r' },
+		{ "identifier", no_argument, NULL, 'i' },
+		{ "colors-per-page", no_argument, NULL, 'p' },
+		{ "page-selector-offset", no_argument, NULL, 'o' },
+		{ "color-space", no_argument, NULL, 's' },
+		{ "color-count", no_argument, NULL, 'c' },
+		{ NULL, 0, NULL, 0 }
+	};
+	
+	int ch; // getopt handle
+	int ind; // getopt index
+	
+	while ((ch = getopt_long(argc, argv, "vxSqteXdriposc", longopts, &ind)) != -1) {
+		switch (ch) {
+			case 'v':
+				verbosity++;
+				break;
+				
+			case 'x':
+				hex_output++;
+				break;
+				
+			case 'S':
+				suppress_headers++;
+				break;
+				
+			case 'q':
+				quiet++;
+				break;
+				
+			case 't':
+				get_title++;
+				break;
+				
+			case 'e':
+				get_prefix++;
+				break;
+			
+			case 'X':
+				get_postfix++;
+				break;
+				
+			case 'd':
+				get_description++;
+				break;
+				
+			case 'r':
+				get_version++;
+				break;
+			
+			case 'i':
+				get_identifier++;
+				break;
+			
+			case 'p':
+				get_colors_per_page++;
+				break;
+			
+			case 'o':
+				get_page_selector_offset++;
+				break;
+			
+			case 's':
+				get_color_space++;
+				break;
+				
+			case 'c':
+				get_color_count++;
+				break;
+			
+			default:
+				printf("Unknown option!\n");
+				exit(EXIT_FAILURE);
+		}
+	}
+	
+	argc -= optind;
+	argv += optind;
+	
+	// now, process the files!
+	
+	char *filename = argv[0];
+	
+	if (!filename) {
+		// the filename was blank
+		printf("No filename provided!\n");
+		exit(EXIT_FAILURE);
+	}
+
+	printf("Opening %s\n", filename);
+
+	FILE *ifile = NULL;
+	
+	if (!(ifile = fopen(filename, "r"))) {
+		perror(filename);
+		exit(1);
+	}
+	
+	// read the header
+	ACB_Header *header = (ACB_Header*)malloc(sizeof(ACB_Header));
+	acb_read_header(ifile, header);
+	
+	if (get_title) {
+		char *title = (char*)malloc(header->title->length * sizeof(char) + 1);
+		acb_string_to_string(header->title, title);
+		
+		if (!suppress_headers) { printf("Title: "); }
+		printf("%s\n", title);
+		
+		free(title);
+		free(header->title);
+	}
+	
+	if (get_prefix) {
+		char *prefix = (char*)malloc(header->prefix->length * sizeof(char) + 1);
+		acb_string_to_string(header->prefix, prefix);
+		
+		if (!suppress_headers) { printf("Prefix: "); }
+		printf("%s\n", prefix);
+		
+		free(prefix);
+		free(header->title);
+	}
+	
+
+	
+
+
+	/*
+	char *postfix = (char*)malloc(header->postfix->length * sizeof(char) + 1);
+	acb_string_to_string(header->postfix, postfix);
+
+	char *description = (char*)malloc(header->description->length * sizeof(char) + 1);
+	acb_string_to_string(header->description, description);
+	
+	printf("signature:            %s\n", header->signature);
+	printf("version:              0x%04X\n", header->version);
+	printf("identifier:           0x%04X\n", header->identifier);
+	printf("title:                %s\n", title);
+	printf("prefix:               %s\n", prefix);
+	printf("postfix:              %s\n", postfix);
+	printf("description:          %s\n", description);
+	printf("color count:          %d\n", header->color_count);
+	printf("colors per page:      %d\n", header->colors_per_page);
+	printf("page selector offset: %d\n", header->page_selector_offset);
+	printf("color space:          %d\n", header->color_space);
+	*/
+	
 }
