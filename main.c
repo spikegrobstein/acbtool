@@ -135,16 +135,16 @@ void dump_action(int argc, char **argv) {
 	acb_read_header(ifile, header);
 	
 	char *title = (char*)malloc(header->title->length * sizeof(char) + 1);
-	acb_string_to_utf8(header->title, title);
+	acb_string_to_string(header->title, title);
 		
 	char *prefix = (char*)malloc(header->prefix->length * sizeof(char) + 1);
-	acb_string_to_utf8(header->prefix, prefix);
+	acb_string_to_string(header->prefix, prefix);
 	
 	char *postfix = (char*)malloc(header->postfix->length * sizeof(char) + 1);
-	acb_string_to_utf8(header->postfix, postfix);
+	acb_string_to_string(header->postfix, postfix);
 
 	char *description = (char*)malloc(header->description->length * sizeof(char) + 1);
-	acb_string_to_utf8(header->description, description);
+	acb_string_to_string(header->description, description);
 	
 	printf("signature:            %s\n", header->signature);
 	printf("version:              0x%04X\n", header->version);
@@ -175,7 +175,7 @@ void dump_action(int argc, char **argv) {
 			acb_read_next_color_record(ifile, r, 0);
 
 			char *color_name = (char*)malloc(r->name->length * sizeof(char) + 1);
-			acb_string_to_utf8(r->name, color_name);
+			acb_string_to_string(r->name, color_name);
 
 			printf(color_format_line, color_name, r->color_code, "", "");
 

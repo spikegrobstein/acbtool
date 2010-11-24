@@ -2,7 +2,7 @@
 #include <iconv.h>
 #include <stdio.h>
 
-void acb_string_to_utf8(ACB_String *string, char *buf) {
+void acb_string_to_string(ACB_String *string, char *buf) {
 	/*
 	**	utf8 is a buffer that should be previously malloc'd to (string->length + 1)
 	*/
