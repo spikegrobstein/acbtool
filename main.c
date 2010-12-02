@@ -6,12 +6,7 @@
 #include "acbheader.h"
 #include "acbcolorrecord.h"
 #include "errors.h"
-
-// options that are common between all actions
-#define COMMON_OPTIONS		{ "verbose", no_argument, NULL, 'v' }, \
-													{ "hex", no_argument, NULL, 'x' }, \
-													{ "suppress-headers", no_argument, NULL, 'S' }, \
-													{ "quiet", no_argument, NULL, 'q' }
+#include "cli.h"
 
 void print_usage();
 void dump_action(int argc, char **argv);
@@ -84,25 +79,34 @@ void dump_action(int argc, char **argv) {
 	int ch; // getopt handle
 	int ind; // getopt index
 	
-	while ((ch = getopt_long(argc, argv, "vxSqh", longopts, &ind)) != -1) {
+	char accepted_options[] = {
+		OPT_VERBOSE_SHORT, \
+		OPT_HEX_SHORT, \
+		OPT_SUPPRESS_HEADERS_SHORT, \
+		OPT_QUIET_SHORT, \
+		OPT_HEADER_ONLY_SHORT,
+		0
+	};
+								
+	while ((ch = getopt_long(argc, argv, accepted_options, longopts, &ind)) != -1) {
 		switch (ch) {
-			case 'v':
+			case OPT_VERBOSE_SHORT:
 				verbosity++;
 				break;
 				
-			case 'x':
+			case OPT_HEX_SHORT:
 				hex_output++;
 				break;
-				
-			case 'S':
+			
+			case OPT_SUPPRESS_HEADERS_SHORT:
 				suppress_headers++;
 				break;
 				
-			case 'q':
+			case OPT_QUIET_SHORT:
 				quiet++;
 				break;
 				
-			case 'h':
+			case OPT_HEADER_ONLY_SHORT:
 				header_only++;
 				break;
 				
@@ -209,7 +213,7 @@ void get_action(int argc, char **argv) {
 	
 	// getopt stuff:
 	static struct option longopts[] = {
-		COMMON_OPTIONS,
+		//COMMON_OPTIONS,
 		{ "title", no_argument, NULL, 't' },
 		{ "prefix", no_argument, NULL, 'e' },
 		{ "postfix", no_argument, NULL, 'X' },
