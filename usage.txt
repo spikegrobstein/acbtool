@@ -1,0 +1,70 @@
+actions:
+  create
+  dump
+  get
+  set
+  append
+  insert
+  delete
+  convert
+  help
+  
+acbtool <action> [ options ... ] <file> [ <file> ... ]
+
+-v verbose
+-S suppress headers
+-q quiet
+
+-x hex
+
+dump file:
+  acbtool dump <filename>
+
+header:
+  --get
+-t    title
+-e    prefix
+-X    postfix
+-d    description
+-r    version
+-i    identifier
+-p    colors_per_page
+-o    page_selector_offset
+-s    color_space
+-c    color_count
+//-C  <index> nth_color
+  --set
+    title
+    prefix
+    postfix
+    description
+    version
+    identifier
+    colors_per_page
+    page_selector_offset
+    color_space
+    
+colors:
+  get
+-c    count
+-C    color (individual or range)
+      all
+      name
+      code
+      components
+  set
+    color (individual)
+      name
+      code
+      components
+  append
+    color
+  insert (at index)
+    color
+  delete
+    color
+    
+actions:
+  convert to xml
+  convert to yaml
+  convert to json
